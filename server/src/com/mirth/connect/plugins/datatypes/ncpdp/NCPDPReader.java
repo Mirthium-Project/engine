@@ -81,11 +81,11 @@ public class NCPDPReader extends AbstractXMLReader {
 
                 if (firstTransaction) {
                     firstTransaction = false;
-                    contentHandler.startElement("", "TRANSACTIONS", "", null);
+                    contentHandler.startElement("", "TRANSACTIONS", "", getEmptyAttributes());
                 }
 
                 // process a group
-                AttributesImpl attr = new AttributesImpl();
+                AttributesImpl attr = getEmptyAttributes();
                 attr.addAttribute("", "counter", "counter", "", Integer.toString(++groupCounter));
                 contentHandler.startElement("", "TRANSACTION", "", attr);
                 inGroup = true;
@@ -126,33 +126,33 @@ public class NCPDPReader extends AbstractXMLReader {
                 version = header.substring(6, 8);
                 headerElementName = "NCPDP_" + version + "_" + transactionName + "_Request";
 
-                contentHandler.startElement("", headerElementName, "", null);
-                contentHandler.startElement("", "TransactionHeaderRequest", "", null);
-                contentHandler.startElement("", "BinNumber", "", null);
+                contentHandler.startElement("", headerElementName, "", getEmptyAttributes());
+                contentHandler.startElement("", "TransactionHeaderRequest", "", getEmptyAttributes());
+                contentHandler.startElement("", "BinNumber", "", getEmptyAttributes());
                 contentHandler.characters(header.toCharArray(), 0, 6);
                 contentHandler.endElement("", "BinNumber", "");
-                contentHandler.startElement("", "VersionReleaseNumber", "", null);
+                contentHandler.startElement("", "VersionReleaseNumber", "", getEmptyAttributes());
                 contentHandler.characters(header.toCharArray(), 6, 2);
                 contentHandler.endElement("", "VersionReleaseNumber", "");
-                contentHandler.startElement("", "TransactionCode", "", null);
+                contentHandler.startElement("", "TransactionCode", "", getEmptyAttributes());
                 contentHandler.characters(header.toCharArray(), 8, 2);
                 contentHandler.endElement("", "TransactionCode", "");
-                contentHandler.startElement("", "ProcessorControlNumber", "", null);
+                contentHandler.startElement("", "ProcessorControlNumber", "", getEmptyAttributes());
                 contentHandler.characters(header.toCharArray(), 10, 10);
                 contentHandler.endElement("", "ProcessorControlNumber", "");
-                contentHandler.startElement("", "TransactionCount", "", null);
+                contentHandler.startElement("", "TransactionCount", "", getEmptyAttributes());
                 contentHandler.characters(header.toCharArray(), 20, 1);
                 contentHandler.endElement("", "TransactionCount", "");
-                contentHandler.startElement("", "ServiceProviderIdQualifier", "", null);
+                contentHandler.startElement("", "ServiceProviderIdQualifier", "", getEmptyAttributes());
                 contentHandler.characters(header.toCharArray(), 21, 2);
                 contentHandler.endElement("", "ServiceProviderIdQualifier", "");
-                contentHandler.startElement("", "ServiceProviderId", "", null);
+                contentHandler.startElement("", "ServiceProviderId", "", getEmptyAttributes());
                 contentHandler.characters(header.toCharArray(), 23, 15);
                 contentHandler.endElement("", "ServiceProviderId", "");
-                contentHandler.startElement("", "DateOfService", "", null);
+                contentHandler.startElement("", "DateOfService", "", getEmptyAttributes());
                 contentHandler.characters(header.toCharArray(), 38, 8);
                 contentHandler.endElement("", "DateOfService", "");
-                contentHandler.startElement("", "SoftwareVendorCertificationId", "", null);
+                contentHandler.startElement("", "SoftwareVendorCertificationId", "", getEmptyAttributes());
                 contentHandler.characters(header.toCharArray(), 46, 10);
                 contentHandler.endElement("", "SoftwareVendorCertificationId", "");
                 contentHandler.endElement("", "TransactionHeaderRequest", "");
@@ -161,27 +161,27 @@ public class NCPDPReader extends AbstractXMLReader {
                 version = header.substring(0, 2);
                 headerElementName = "NCPDP_" + version + "_" + transaction + "_Response";
 
-                contentHandler.startElement("", headerElementName, "", null);
-                contentHandler.startElement("", "TransactionHeaderResponse", "", null);
-                contentHandler.startElement("", "VersionReleaseNumber", "", null);
+                contentHandler.startElement("", headerElementName, "", getEmptyAttributes());
+                contentHandler.startElement("", "TransactionHeaderResponse", "", getEmptyAttributes());
+                contentHandler.startElement("", "VersionReleaseNumber", "", getEmptyAttributes());
                 contentHandler.characters(header.toCharArray(), 0, 2);
                 contentHandler.endElement("", "VersionReleaseNumber", "");
-                contentHandler.startElement("", "TransactionCode", "", null);
+                contentHandler.startElement("", "TransactionCode", "", getEmptyAttributes());
                 contentHandler.characters(header.toCharArray(), 2, 2);
                 contentHandler.endElement("", "TransactionCode", "");
-                contentHandler.startElement("", "TransactionCount", "", null);
+                contentHandler.startElement("", "TransactionCount", "", getEmptyAttributes());
                 contentHandler.characters(header.toCharArray(), 4, 1);
                 contentHandler.endElement("", "TransactionCount", "");
-                contentHandler.startElement("", "HeaderResponseStatus", "", null);
+                contentHandler.startElement("", "HeaderResponseStatus", "", getEmptyAttributes());
                 contentHandler.characters(header.toCharArray(), 5, 1);
                 contentHandler.endElement("", "HeaderResponseStatus", "");
-                contentHandler.startElement("", "ServiceProviderIdQualifier", "", null);
+                contentHandler.startElement("", "ServiceProviderIdQualifier", "", getEmptyAttributes());
                 contentHandler.characters(header.toCharArray(), 6, 2);
                 contentHandler.endElement("", "ServiceProviderIdQualifier", "");
-                contentHandler.startElement("", "ServiceProviderId", "", null);
+                contentHandler.startElement("", "ServiceProviderId", "", getEmptyAttributes());
                 contentHandler.characters(header.toCharArray(), 8, 15);
                 contentHandler.endElement("", "ServiceProviderId", "");
-                contentHandler.startElement("", "DateOfService", "", null);
+                contentHandler.startElement("", "DateOfService", "", getEmptyAttributes());
                 contentHandler.characters(header.toCharArray(), 23, 8);
                 contentHandler.endElement("", "DateOfService", "");
                 contentHandler.endElement("", "TransactionHeaderResponse", "");
@@ -219,7 +219,7 @@ public class NCPDPReader extends AbstractXMLReader {
             subSegment = segment.substring(fieldDelimeterIndex + fieldDelimeter.length(), segment.length());
         }
 
-        contentHandler.startElement("", NCPDPReference.getInstance().getSegment(segmentId, version), "", null);
+        contentHandler.startElement("", NCPDPReference.getInstance().getSegment(segmentId, version), "", getEmptyAttributes());
 
         while (hasMoreFields) {
             fieldDelimeterIndex = subSegment.indexOf(fieldDelimeter);
@@ -258,20 +258,20 @@ public class NCPDPReader extends AbstractXMLReader {
                 }
 
                 inCounter = true;
-                AttributesImpl attr = new AttributesImpl();
+                AttributesImpl attr = getEmptyAttributes();
                 attr.addAttribute("", "counter", "counter", "", fieldMessage);
                 contentHandler.startElement("", fieldDescription, "", attr);
                 fieldStack.push(fieldDescription);
             } else if (fieldDescription.endsWith("Count")) {
                 // count field, add complex element
                 inCount = true;
-                AttributesImpl attr = new AttributesImpl();
+                AttributesImpl attr = getEmptyAttributes();
                 attr.addAttribute("", fieldDescription, fieldDescription, "", fieldMessage);
                 // start the repeating field element
                 contentHandler.startElement("", fieldDescription, "", attr);
                 fieldStack.push(fieldDescription);
             } else {
-                contentHandler.startElement("", fieldDescription, "", null);
+                contentHandler.startElement("", fieldDescription, "", getEmptyAttributes());
                 contentHandler.characters(fieldMessage.toCharArray(), 0, fieldMessage.length());
                 contentHandler.endElement("", fieldDescription, "");
             }

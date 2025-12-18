@@ -74,13 +74,13 @@ public class EDIReader extends AbstractXMLReader {
                         documentHead = "EDIMessage";
                     }
 
-                    AttributesImpl attributesImpl = new AttributesImpl();
+                    AttributesImpl attributesImpl = getEmptyAttributes();
                     attributesImpl.addAttribute("", "segmentDelimiter", "", "", segmentDelimiter);
                     attributesImpl.addAttribute("", "elementDelimiter", "", "", elementDelimiter);
                     attributesImpl.addAttribute("", "subelementDelimiter", "", "", subelementDelimiter);
                     contentHandler.startElement("", documentHead, "", attributesImpl);
                 }
-                contentHandler.startElement("", segmentID, "", null);
+                contentHandler.startElement("", segmentID, "", getEmptyAttributes());
 
                 int fieldID = 0;
                 String field = "00";
@@ -97,7 +97,7 @@ public class EDIReader extends AbstractXMLReader {
                     // The naming is SEG.<field number>
                     if (element.equals(elementDelimiter)) {
                         if (lastsegElement) {
-                            contentHandler.startElement("", segmentID + "." + field, "", null);
+                            contentHandler.startElement("", segmentID + "." + field, "", getEmptyAttributes());
                             contentHandler.endElement("", segmentID + "." + field, "");
                         }
                         fieldID++;
@@ -106,7 +106,7 @@ public class EDIReader extends AbstractXMLReader {
                         lastsegElement = false;
 
                         if (element.indexOf(subelementDelimiter) > -1) {
-                            contentHandler.startElement("", segmentID + "." + field, "", null);
+                            contentHandler.startElement("", segmentID + "." + field, "", getEmptyAttributes());
                             // check if we have sub-elements, if so add them
                             StringTokenizer subelementTokenizer = new StringTokenizer(element, subelementDelimiter, true);
                             subelementID = 1;
@@ -116,7 +116,7 @@ public class EDIReader extends AbstractXMLReader {
                                 if (subelement.equals(subelementDelimiter)) {
                                     String subelementName = segmentID + "." + field + "." + subelementID;
                                     if (lastsegSubelement) {
-                                        contentHandler.startElement("", subelementName, "", null);
+                                        contentHandler.startElement("", subelementName, "", getEmptyAttributes());
                                         contentHandler.characters("".toCharArray(), 0, 0);
                                         contentHandler.endElement("", subelementName, "");
                                     }
@@ -128,7 +128,7 @@ public class EDIReader extends AbstractXMLReader {
                                     lastsegSubelement = false;
                                     // The naming is SEG.<field
                                     // number>.<element number>
-                                    contentHandler.startElement("", subelementName, "", null);
+                                    contentHandler.startElement("", subelementName, "", getEmptyAttributes());
                                     contentHandler.characters(subelement.toCharArray(), 0, subelement.length());
                                     contentHandler.endElement("", subelementName, "");
 
@@ -136,19 +136,19 @@ public class EDIReader extends AbstractXMLReader {
                             }
                             String subelementName = segmentID + "." + (field) + "." + subelementID;
                             if (lastsegSubelement) {
-                                contentHandler.startElement("", subelementName, "", null);
+                                contentHandler.startElement("", subelementName, "", getEmptyAttributes());
                                 contentHandler.characters("".toCharArray(), 0, 0);
                                 contentHandler.endElement("", subelementName, "");
                             }
-                            contentHandler.endElement("", segmentID + "." + (field), null);
+                            contentHandler.endElement("", segmentID + "." + (field), "");
                         } else {
-                            contentHandler.startElement("", segmentID + "." + field, "", null);
-                            contentHandler.startElement("", segmentID + "." + field + ".1", "", null);
+                            contentHandler.startElement("", segmentID + "." + field, "", getEmptyAttributes());
+                            contentHandler.startElement("", segmentID + "." + field + ".1", "", getEmptyAttributes());
 
                             // Set the text contents to the value
                             contentHandler.characters(element.toCharArray(), 0, element.length());
-                            contentHandler.endElement("", segmentID + "." + (field) + ".1", null);
-                            contentHandler.endElement("", segmentID + "." + (field), null);
+                            contentHandler.endElement("", segmentID + "." + (field) + ".1", "");
+                            contentHandler.endElement("", segmentID + "." + (field), "");
 
                         }
                     }
@@ -158,7 +158,7 @@ public class EDIReader extends AbstractXMLReader {
                     // Set the field id here so we don't get dupe fields like
                     // SE.01 and SE.01 when we have SE**~
                     field = fieldID < 10 ? "0" + fieldID : "" + fieldID;
-                    contentHandler.startElement("", segmentID + "." + field, "", null);
+                    contentHandler.startElement("", segmentID + "." + field, "", getEmptyAttributes());
                     contentHandler.endElement("", segmentID + "." + field, "");
                 }
                 contentHandler.endElement("", segmentID, "");

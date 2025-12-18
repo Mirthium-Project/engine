@@ -84,7 +84,7 @@ public class DelimitedReader extends AbstractXMLReader {
         contentHandler.startDocument();
 
         // Output <delimited>
-        contentHandler.startElement("", documentHead, "", null);
+        contentHandler.startElement("", documentHead, "", getEmptyAttributes());
 
         // While the parser gets records from the message
         ArrayList<String> record;
@@ -93,9 +93,9 @@ public class DelimitedReader extends AbstractXMLReader {
 
             // Output <rowN>
             if (serializationProperties.isNumberedRows()) {
-                contentHandler.startElement("", "row" + recordNo, "", null);
+                contentHandler.startElement("", "row" + recordNo, "", getEmptyAttributes());
             } else {
-                contentHandler.startElement("", "row", "", null);
+                contentHandler.startElement("", "row", "", getEmptyAttributes());
             }
 
             // For each column
@@ -110,7 +110,7 @@ public class DelimitedReader extends AbstractXMLReader {
                     columnName = "column" + (i + 1);
                 }
                 // Output <columnN>
-                contentHandler.startElement("", columnName, "", null);
+                contentHandler.startElement("", columnName, "", getEmptyAttributes());
 
                 // Output column value
                 String val = record.get(i);
