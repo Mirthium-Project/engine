@@ -135,11 +135,11 @@ public class Client implements UserServletInterface, ConfigurationServletInterfa
 
     public static final int MAX_QUERY_PARAM_COLLECTION_SIZE = 100;
 
-    private Logger logger = LogManager.getLogger(this.getClass());
-    private ServerConnection serverConnection;
-    private javax.ws.rs.client.Client client;
-    private URI api;
-    private AtomicBoolean closed = new AtomicBoolean(false);
+    private final Logger logger = LogManager.getLogger(this.getClass());
+    private final ServerConnection serverConnection;
+    private final javax.ws.rs.client.Client client;
+    private final URI api;
+    private final AtomicBoolean closed = new AtomicBoolean(false);
     private InvocationHandlerRecorder recorder;
 
     /**
