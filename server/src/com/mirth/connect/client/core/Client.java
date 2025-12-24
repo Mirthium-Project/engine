@@ -131,7 +131,11 @@ import com.mirth.connect.util.MirthSSLUtil;
 import com.mirth.connect.util.messagewriter.EncryptionType;
 import com.mirth.connect.util.messagewriter.MessageWriterOptions;
 
-public class Client implements UserServletInterface, ConfigurationServletInterface, ChannelServletInterface, ChannelGroupServletInterface, ChannelStatusServletInterface, ChannelStatisticsServletInterface, EngineServletInterface, MessageServletInterface, EventServletInterface, AlertServletInterface, CodeTemplateServletInterface, DatabaseTaskServletInterface, UsageServletInterface, ExtensionServletInterface {
+public class Client implements UserServletInterface, ConfigurationServletInterface, ChannelServletInterface,
+        ChannelGroupServletInterface, ChannelStatusServletInterface, ChannelStatisticsServletInterface,
+        EngineServletInterface, MessageServletInterface, EventServletInterface, AlertServletInterface,
+        CodeTemplateServletInterface, DatabaseTaskServletInterface, UsageServletInterface, ExtensionServletInterface,
+        AutoCloseable {
 
     public static final int MAX_QUERY_PARAM_COLLECTION_SIZE = 100;
 
@@ -312,9 +316,9 @@ public class Client implements UserServletInterface, ConfigurationServletInterfa
         this.recorder = recorder;
     }
 
+    @Override
     public void close() {
-        closed.set(true);
-        if (serverConnection != null) {
+        if (!closed.getAndSet(true)) {
             serverConnection.shutdown();
             client.close();
         }
