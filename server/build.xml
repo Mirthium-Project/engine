@@ -7,7 +7,7 @@
 	<property name="jdk_src_path" value="" />
 
 	<target name="help">
-		<echo>Mirth Connect Build Help</echo>
+		<echo>OIE Build Help</echo>
 	</target>
 
 	<target name="init">
@@ -1065,7 +1065,7 @@
 			<else>
 				<!-- modify jar manifests -->
 				<!-- don't modify bcprov, since it already has the manifest changes and is signed by BC -->
-				<echo message="[Thread Count: ${manifest_thread_count}] Modifying jar manifests to add Permissions: all-permissions; Codebase: *; Application-Name: Mirth Connect" />
+				<echo message="[Thread Count: ${manifest_thread_count}] Modifying jar manifests to add Permissions: all-permissions; Codebase: *; Application-Name: Open Integration Engine" />
 				<for param="jarFile" parallel="true" threadCount="${manifest_thread_count}">
 					<fileset dir="${setup.client.lib}" includes="**/*.jar" excludes="bcp*.jar,bcutil*.jar"/>
 					<fileset dir="${setup.extensions}" includes="**/*.jar" />
@@ -1226,7 +1226,7 @@
 		</java>
 	</target>
 
-	<target name="dev-launcher" depends="init" description="This runs Mirth using the setup launcher">
+	<target name="dev-launcher" depends="init" description="This runs OIE using the setup launcher">
 		<java classname="com.mirth.connect.server.launcher.MirthLauncher" fork="true" dir="${setup}" failonerror="true">
 			<classpath>
 				<pathelement location="${setup}/mirth-launcher.jar" />
@@ -1234,7 +1234,7 @@
 		</java>
 	</target>
 
-	<target name="dev-run" depends="init" description="This runs the mirth server using the Eclipse environment">
+	<target name="dev-run" depends="init" description="This runs the OIE server using the Eclipse environment">
 		<java classname="com.mirth.connect.server.Mirth" fork="true" dir="${basedir}" failonerror="true">
 			<classpath>
 				<pathelement location="bin" />

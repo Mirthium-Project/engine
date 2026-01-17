@@ -1,6 +1,6 @@
 <project name="mirth-manager" basedir="." default="help">
 	<target name="help">
-		<echo>Mirth Manager Build Help</echo>
+		<echo>OIE Manager Build Help</echo>
 		<echo>-----------------------</echo>
 	</target>
 
