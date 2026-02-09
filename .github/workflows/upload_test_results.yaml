@@ -29,13 +29,8 @@ jobs:
            github-token: ${{ secrets.GITHUB_TOKEN }}
            path: artifacts
 
-      - name: Debug - List Files
-        run: ls -R artifacts
-
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           commit: ${{ github.event.workflow_run.head_sha }}
-          event_file: artifacts/Event File/event.json
-          event_name: ${{ github.event.workflow_run.event }}
-          files: "artifacts/Test Results/aggregate-test-results/**/*.xml"
+          files: "artifacts/Test Results/**/*.xml"
