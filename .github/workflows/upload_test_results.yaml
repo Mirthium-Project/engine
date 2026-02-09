@@ -29,9 +29,6 @@ jobs:
            github-token: ${{ secrets.GITHUB_TOKEN }}
            path: artifacts
 
-      - name: Debug - List Files
-        run: ls -R artifacts
-
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
