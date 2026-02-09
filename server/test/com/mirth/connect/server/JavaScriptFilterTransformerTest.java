@@ -44,6 +44,7 @@ public class JavaScriptFilterTransformerTest {
         Set<String> resourceIds = new HashSet<String>();
         resourceIds.add("resourceId");
         String channelId = "channelId";
+	assertEquals(0,1);
 
         when(connector.getChannel()).thenReturn(channel);
         when(channel.getResourceIds()).thenReturn(resourceIds);
